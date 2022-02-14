@@ -4,5 +4,4 @@ from . import views
 urlpatterns = [
     path('', views.measurements_view, name='measurements_view'),
     path('<int:pk>', views.measurement_view, name='measurement_view'),
-    path('delete/<int:id>/', views.delete_measurement, name = 'measurementsDelete'),
 ]

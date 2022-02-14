@@ -4,10 +4,6 @@ from django.core import serializers
 import json
 from django.views.decorators.csrf import csrf_exempt
 
-def delete_measurement(request, id):
-    ms.delete_measurement(id)
-    return HttpResponse("<int:id> deleted")
-
 @csrf_exempt
 def measurements_view(request):
     if request.method == 'GET':
@@ -25,7 +21,7 @@ def measurements_view(request):
         measurement_dto = ms.create_measurement(json.loads(request.body))
         measurement = serializers.serialize('json', [measurement_dto,])
         return HttpResponse(measurement, 'application/json')
-
+    
 @csrf_exempt
 def measurement_view(request, pk):
     if request.method == 'GET':
@@ -38,4 +34,7 @@ def measurement_view(request, pk):
         measurement = serializers.serialize('json', [measurement_dto,])
         return HttpResponse(measurement, 'application/json')
 
+    if request.method == 'DELETE':
+        ms.delete_measurement(pk)
+        return HttpResponse("<int:pk> deleted")
 # Create your views here.
